@@ -158,6 +158,24 @@ EOF;
 
         $this->assertEquals('{ foo: !!php/object:O:30:"Symfony\Component\Yaml\Tests\A":1:{s:1:"a";s:3:"foo";}, bar: 1 }', $this->dumper->dump($a), '->dump() is able to dump objects');
     }
+
+    /**
+     * @dataProvider getVariousQuotedString 
+     */
+    public function testQuotes($array)
+    {
+        $this->assertEquals($array, Yaml::parse($this->dumper->dump($array, 4)));
+    }
+    
+    public function getVariousQuotedString()
+    {
+        return array(
+            array('key' => 'a quoted "value", then text'),
+            array('key' => 'a quoted "value": then text'),
+            array('key' => "a quoted 'value', then text"),
+            array('key' => "a quoted 'value': then text"),
+        );
+    }
 }
 
 class A
