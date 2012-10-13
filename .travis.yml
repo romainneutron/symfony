@@ -6,10 +6,11 @@ php:
   - 5.4
 
 before_script:
+    - cat /home/travis/.phpenv/shims/php
     - sudo apt-get install gdb
     - COMPOSER_ROOT_VERSION=dev-master composer --dev install
     - php src/Symfony/Component/Locale/Resources/data/build-data.php
     - export USE_INTL_ICU_DATA_VERSION=1
 
 script:
-    - sudo gdb --args `which php` `which phpunit` `pwd`
+    - sudo gdb --args php `which phpunit` `pwd`
