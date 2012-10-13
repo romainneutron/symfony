@@ -13,3 +13,5 @@ before_script:
     - php src/Symfony/Component/Locale/Resources/data/build-data.php
     - export USE_INTL_ICU_DATA_VERSION=1
 
+script:
+    - sudo gdb --args /home/travis/.phpenv/versions/5.4.7/bin/php /home/travis/.phpenv/versions/5.4.7/bin/phpunit `pwd`
