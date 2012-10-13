@@ -13,4 +13,4 @@ before_script:
     - export USE_INTL_ICU_DATA_VERSION=1
 
 script:
-    - sudo gdb --args php `which phpunit` `pwd`
+    - sudo gdb --args /usr/bin/php `which phpunit` `pwd`
