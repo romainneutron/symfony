@@ -344,13 +344,6 @@ class Process
             $this->readPipes(true);
         }
         $this->updateStatus(false);
-        if ($this->processInformation['signaled']) {
-            if ($this->isSigchildEnabled()) {
-                throw new RuntimeException('The process has been signaled.');
-            }
-
-            throw new RuntimeException(sprintf('The process has been signaled with signal "%s".', $this->processInformation['termsig']));
-        }
 
         $time = 0;
         while ($this->isRunning() && $time < 1000000) {
