@@ -31,6 +31,9 @@
         </exclude>
     </groups>
 
+  <listeners>
+    <listener class="PHPUnitListener" file="PHPUnitListener.php"></listener>
+  </listeners>
     <filter>
         <whitelist>
             <directory>./src/Symfony/</directory>
