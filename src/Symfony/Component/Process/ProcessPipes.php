@@ -92,7 +92,9 @@ class ProcessPipes
     public function closeUnixPipes()
     {
         foreach ($this->pipes as $pipe) {
-            fclose($pipe);
+            if (is_resource($pipe)) {
+                fclose($pipe);
+            }
         }
         $this->pipes = array();
     }
