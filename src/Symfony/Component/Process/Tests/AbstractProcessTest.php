@@ -669,15 +669,8 @@ abstract class AbstractProcessTest extends \PHPUnit_Framework_TestCase
             'include \''.__DIR__.'/PipeStdinInStdoutStdErrStreamSelect.php\';',
         );
 
-        if (defined('PHP_WINDOWS_VERSION_BUILD')) {
-            // Avoid XL buffers on Windows because of https://bugs.php.net/bug.php?id=65650
-            $sizes = array(1, 2, 4, 8);
-        } else {
-            $sizes = array(1, 16, 64, 1024, 4096);
-        }
-
         $codes = array();
-        foreach ($sizes as $size) {
+        foreach (array(1, 16, 64, 1024, 4096) as $size) {
             foreach ($variations as $code) {
                 $codes[] = array($code, $size);
             }
