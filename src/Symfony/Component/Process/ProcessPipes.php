@@ -110,10 +110,12 @@ class ProcessPipes
             // We're not using pipe on Windows platform as it hangs (https://bugs.php.net/bug.php?id=51800)
             // We're not using file handles as it can produce corrupted output https://bugs.php.net/bug.php?id=65650
             // So we redirect output within the commandline and pass the nul device to the process
+            $nullstream = fopen('NUL', 'c');
+
             return array(
                 array('pipe', 'r'),
-                array('file', 'NUL', 'w'),
-                array('file', 'NUL', 'w'),
+                $nullstream,
+                $nullstream,
             );
         }
 
