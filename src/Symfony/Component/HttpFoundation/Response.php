@@ -1028,18 +1028,6 @@ class Response
     }
 
     /**
-     * Modifies the response so that it returns a 412 status code.
-     *
-     * @return Response
-     */
-    public function setPreconditionFailed()
-    {
-        $this->setStatusCode(412);
-
-        return $this;
-    }
-
-    /**
      * Determines if the Response validators (ETag, Last-Modified) do not match
      * a conditional value specified in the Request.
      *
