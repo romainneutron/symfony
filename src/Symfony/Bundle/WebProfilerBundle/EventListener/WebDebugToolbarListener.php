@@ -11,6 +11,7 @@
 
 namespace Symfony\Bundle\WebProfilerBundle\EventListener;
 
+use Symfony\Bundle\WebProfilerBundle\CSP\ContentSecurityPolicyHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\AutoExpireFlashBag;
@@ -40,8 +41,9 @@ class WebDebugToolbarListener implements EventSubscriberInterface
     protected $mode;
     protected $position;
     protected $excludedAjaxPaths;
+    protected $cspHandler;
 
-    public function __construct(\Twig_Environment $twig, $interceptRedirects = false, $mode = self::ENABLED, $position = 'bottom', UrlGeneratorInterface $urlGenerator = null, $excludedAjaxPaths = '^/bundles|^/_wdt')
+    public function __construct(\Twig_Environment $twig, $interceptRedirects = false, $mode = self::ENABLED, $position = 'bottom', UrlGeneratorInterface $urlGenerator = null, $excludedAjaxPaths = '^/bundles|^/_wdt', ContentSecurityPolicyHandler $cspHandler)
     {
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
@@ -49,6 +51,7 @@ class WebDebugToolbarListener implements EventSubscriberInterface
         $this->mode = (int) $mode;
         $this->position = $position;
         $this->excludedAjaxPaths = $excludedAjaxPaths;
+        $this->cspHandler = $cspHandler;
     }
 
     public function isEnabled()
@@ -80,6 +83,8 @@ class WebDebugToolbarListener implements EventSubscriberInterface
         if ($request->isXmlHttpRequest()) {
             return;
         }
+
+        $this->cspHandler->updateResponseWithNonceHeaders($response);
 
         if ($response->headers->has('X-Debug-Token') && $response->isRedirect() && $this->interceptRedirects) {
             $session = $request->getSession();
@@ -116,14 +121,16 @@ class WebDebugToolbarListener implements EventSubscriberInterface
         $pos = strripos($content, '</body>');
 
         if (false !== $pos) {
+            $nonces = $this->cspHandler->updateResponseForCSP($response);
+
             $toolbar = "\n".str_replace("\n", '', $this->twig->render(
                 '@WebProfiler/Profiler/toolbar_js.html.twig',
-                array(
+                array_merge($nonces, array(
                     'position' => $this->position,
                     'excluded_ajax_paths' => $this->excludedAjaxPaths,
                     'token' => $response->headers->get('X-Debug-Token'),
                     'request' => $request,
-                )
+                ))
             ))."\n";
             $content = substr($content, 0, $pos).$toolbar.substr($content, $pos);
             $response->setContent($content);
