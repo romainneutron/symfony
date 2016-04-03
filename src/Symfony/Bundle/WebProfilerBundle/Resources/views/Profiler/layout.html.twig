@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <script>//<![CDATA[
+    <script{% if csp_script_nonce %} nonce="{{ csp_script_nonce }}"{% endif %}>//<![CDATA[
 
         function toggleMenuPanels(state, doSave) {
             var menu = document.getElementById('navigation'), savedState = Sfjs.getPreference('menu/displayState'), displayState;

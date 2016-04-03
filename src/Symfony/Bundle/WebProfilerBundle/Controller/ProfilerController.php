@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\AutoExpireFlashBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\WebProfilerBundle\Profiler\TemplateManager;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\WebProfilerBundle\CSP\ContentSecurityPolicyHandler;
 
 /**
  * ProfilerController.
@@ -33,6 +34,7 @@ class ProfilerController
     private $twig;
     private $templates;
     private $toolbarPosition;
+    private $cspHandler;
 
     /**
      * Constructor.
@@ -43,13 +45,14 @@ class ProfilerController
      * @param array                 $templates       The templates
      * @param string                $toolbarPosition The toolbar position (top, bottom, normal, or null -- use the configuration)
      */
-    public function __construct(UrlGeneratorInterface $generator, Profiler $profiler = null, \Twig_Environment $twig, array $templates, $toolbarPosition = 'normal')
+    public function __construct(UrlGeneratorInterface $generator, ContentSecurityPolicyHandler $cspHandler, Profiler $profiler = null, \Twig_Environment $twig, array $templates, $toolbarPosition = 'normal')
     {
         $this->generator = $generator;
         $this->profiler = $profiler;
         $this->twig = $twig;
         $this->templates = $templates;
         $this->toolbarPosition = $toolbarPosition;
+        $this->cspHandler = $cspHandler;
     }
 
     /**
@@ -92,14 +95,15 @@ class ProfilerController
         $page = $request->query->get('page', 'home');
 
         if (!$profile = $this->profiler->loadProfile($token)) {
-            return new Response($this->twig->render('@WebProfiler/Profiler/info.html.twig', array('about' => 'no_token', 'token' => $token)), 200, array('Content-Type' => 'text/html'));
+            return new Response($this->twig->render('@WebProfiler/Profiler/info.html.twig', array('about' => 'no_token', 'token' => $token, 'request' => $request)), 200, array('Content-Type' => 'text/html'));
         }
 
         if (!$profile->hasCollector($panel)) {
             throw new NotFoundHttpException(sprintf('Panel "%s" is not available for token "%s".', $panel, $token));
         }
 
-        return new Response($this->twig->render($this->getTemplateManager()->getName($profile, $panel), array(
+        $nonces = $this->cspHandler->generateNonces();
+        $response = new Response($this->twig->render($this->getTemplateManager()->getName($profile, $panel), array_merge($nonces, array(
             'token' => $token,
             'profile' => $profile,
             'collector' => $profile->getCollector($panel),
@@ -108,7 +112,14 @@ class ProfilerController
             'request' => $request,
             'templates' => $this->getTemplateManager()->getTemplates($profile),
             'is_ajax' => $request->isXmlHttpRequest(),
-        )), 200, array('Content-Type' => 'text/html'));
+        ))), 200, array('Content-Type' => 'text/html'));
+
+        if (!$request->isXmlHttpRequest()) {
+            $response->headers->set('X-WebProfiler-Script-Nonce', $nonces['csp_script_nonce']);
+            $response->headers->set('X-WebProfiler-Style-Nonce', $nonces['csp_style_nonce']);
+        }
+
+        return $response;
     }
 
     /**

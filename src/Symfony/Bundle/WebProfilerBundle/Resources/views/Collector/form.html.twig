@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block panel %}
-    <style type="text/css">
+    <style{% if csp_style_nonce %} nonce="{{ csp_style_nonce }}"{% endif %}>
     .window {
         /*background: #F6F6F6;*/
         margin: -30px -40px -40px;
@@ -198,7 +198,7 @@
         <p><em>No forms were submitted for this request.</em></p>
     {% endif %}
 
-    <script>
+    <script{% if csp_script_nonce %} nonce="{{ csp_script_nonce }}"{% endif %}>
     function Toggler(storage) {
         "use strict";
 

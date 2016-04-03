@@ -8,12 +8,14 @@
         <parameter key="web_profiler.controller.profiler.class">Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController</parameter>
         <parameter key="web_profiler.controller.router.class">Symfony\Bundle\WebProfilerBundle\Controller\RouterController</parameter>
         <parameter key="web_profiler.controller.exception.class">Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController</parameter>
+        <parameter key="web_profiler.csp_handler.class">Symfony\Bundle\WebProfilerBundle\CSP\ContentSecurityPolicyHandler</parameter>
         <parameter key="twig.extension.webprofiler.class">Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension</parameter>
     </parameters>
 
     <services>
         <service id="web_profiler.controller.profiler" class="%web_profiler.controller.profiler.class%">
             <argument type="service" id="router" on-invalid="null" />
+            <argument type="service" id="web_profiler.csp_handler" />
             <argument type="service" id="profiler" on-invalid="null" />
             <argument type="service" id="twig" />
             <argument>%data_collector.templates%</argument>
@@ -30,6 +32,9 @@
             <argument type="service" id="profiler" on-invalid="null" />
             <argument type="service" id="twig" />
             <argument>%kernel.debug%</argument>
+        </service>
+
+        <service id="web_profiler.csp_handler" class="%web_profiler.csp_handler.class%">
         </service>
 
         <service id="twig.extension.webprofiler" class="%twig.extension.webprofiler.class%" public="false">
