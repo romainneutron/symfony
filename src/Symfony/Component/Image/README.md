@@ -1,0 +1,3 @@
+Symfony Image Manipulation Component
+====================================
+
