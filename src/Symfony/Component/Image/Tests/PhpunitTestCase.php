@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Image\Test;
+namespace Symfony\Component\Image\Tests;
 
 use Symfony\Component\Image\Tests\Constraint\IsImageEqual;
 

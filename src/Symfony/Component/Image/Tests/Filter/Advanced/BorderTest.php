@@ -12,6 +12,8 @@
 namespace Symfony\Component\Image\Tests\Filter\Advanced;
 
 use Symfony\Component\Image\Filter\Advanced\Border;
+use Symfony\Component\Image\Image\BoxInterface;
+use Symfony\Component\Image\Image\Palette\Color\ColorInterface;
 use Symfony\Component\Image\Tests\Filter\FilterTestCase;
 
 class BorderTest extends FilterTestCase

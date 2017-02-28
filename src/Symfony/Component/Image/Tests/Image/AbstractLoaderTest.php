@@ -36,7 +36,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
 
     public function testShouldOpenAnImage()
     {
-        $source = __DIR__.'/../Fixturesgoogle.png';
+        $source = __DIR__.'/../Fixtures/google.png';
         $factory = $this->getLoader();
         $image   = $factory->open($source);
         $size    = $image->getSize();
@@ -53,7 +53,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
 
     public function testShouldOpenAnSplFileResource()
     {
-        $source = __DIR__.'/../Fixturesgoogle.png';
+        $source = __DIR__.'/../Fixtures/google.png';
         $resource = new \SplFileInfo($source);
         $factory = $this->getLoader();
         $image   = $factory->open($resource);
@@ -79,7 +79,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
 
     public function testShouldFailOnInvalidImage()
     {
-        $source = __DIR__.'/../Fixturesinvalid-image.jpg';
+        $source = __DIR__.'/../Fixtures/invalid-image.jpg';
 
         $this->setExpectedException(RuntimeException::class, sprintf('Unable to open image %s', $source));
         $this->getLoader()->open($source);
@@ -104,7 +104,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
     public function testShouldCreateImageFromString()
     {
         $factory = $this->getLoader();
-        $image   = $factory->load(file_get_contents(__DIR__.'/../Fixturesgoogle.png'));
+        $image   = $factory->load(file_get_contents(__DIR__.'/../Fixtures/google.png'));
         $size    = $image->getSize();
 
         $this->assertInstanceOf(ImageInterface::class, $image);
@@ -139,7 +139,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
 
     public function testShouldCreateImageFromResource()
     {
-        $source = __DIR__.'/../Fixturesgoogle.png';
+        $source = __DIR__.'/../Fixtures/google.png';
         $factory = $this->getLoader();
         $resource = fopen($source, 'r');
         $image   = $factory->read($resource);
@@ -179,7 +179,7 @@ abstract class AbstractLoaderTest extends PhpunitTestCase
         }
 
         $palette = new RGB();
-        $path    = __DIR__.'/../Fixturesfont/Arial.ttf';
+        $path    = __DIR__.'/../Fixtures/font/Arial.ttf';
         $black   = $palette->color('000');
         $factory = $this->getLoader();
 

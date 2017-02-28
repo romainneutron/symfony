@@ -34,19 +34,19 @@ abstract class AbstractImageTest extends PhpunitTestCase
 {
     public function testPaletteIsRGBIfRGBImage()
     {
-        $image = $this->getLoader()->open(__DIR__ . '/../../Fixtures/google.png');
+        $image = $this->getLoader()->open(__DIR__ . '/../Fixtures/google.png');
         $this->assertInstanceOf(RGB::class, $image->palette());
     }
 
     public function testPaletteIsCMYKIfCMYKImage()
     {
-        $image = $this->getLoader()->open(__DIR__ . '/../../Fixtures/pixel-CMYK.jpg');
+        $image = $this->getLoader()->open(__DIR__ . '/../Fixtures/pixel-CMYK.jpg');
         $this->assertInstanceOf(CMYK::class, $image->palette());
     }
 
     public function testPaletteIsGrayIfGrayImage()
     {
-        $image = $this->getLoader()->open(__DIR__ . '/../../Fixtures/pixel-grayscale.jpg');
+        $image = $this->getLoader()->open(__DIR__ . '/../Fixtures/pixel-grayscale.jpg');
         $this->assertInstanceOf(Grayscale::class, $image->palette());
     }
 
@@ -113,7 +113,7 @@ abstract class AbstractImageTest extends PhpunitTestCase
 
         $this
             ->getLoader()
-            ->open(__DIR__ . '/../../Fixtures/large.jpg')
+            ->open(__DIR__ . '/../Fixtures/large.jpg')
             ->save($tmpFile);
 
         $data = exif_read_data($tmpFile);
@@ -123,8 +123,8 @@ abstract class AbstractImageTest extends PhpunitTestCase
 
     public function testSaveWithoutPathFileFromImageLoadShouldBeOkay()
     {
-        $source = __DIR__ . '/../../Fixtures/google.png';
-        $tmpFile = __DIR__ . '/../../Fixtures/google.tmp.png';
+        $source = __DIR__ . '/../Fixtures/google.png';
+        $tmpFile = __DIR__ . '/../Fixtures/google.tmp.png';
 
         if (file_exists($tmpFile)) {
             unlink($tmpFile);
@@ -726,8 +726,8 @@ abstract class AbstractImageTest extends PhpunitTestCase
     public function provideVariousSources()
     {
         return array(
-            array(__DIR__.'/../../Fixtures/example.svg'),
-            array(__DIR__.'/../../Fixtures/100-percent-black.png'),
+            array(__DIR__.'/../Fixtures/example.svg'),
+            array(__DIR__.'/../Fixtures/100-percent-black.png'),
         );
     }
 

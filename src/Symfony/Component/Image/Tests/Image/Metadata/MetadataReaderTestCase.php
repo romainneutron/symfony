@@ -26,7 +26,7 @@ abstract class MetadataReaderTestCase extends PhpunitTestCase
 
     public function testReadFromFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__ . '/../../Fixtures/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf(MetadataBag::class, $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -35,7 +35,7 @@ abstract class MetadataReaderTestCase extends PhpunitTestCase
 
     public function testReadFromExifUncompatibleFile()
     {
-        $source = __DIR__ . '/../../../Fixtures/trans.png';
+        $source = __DIR__ . '/../../Fixtures/trans.png';
         $metadata = $this->getReader()->readFile($source);
         $this->assertInstanceOf(MetadataBag::class, $metadata);
         $this->assertEquals(realpath($source), $metadata['filepath']);
@@ -62,7 +62,7 @@ abstract class MetadataReaderTestCase extends PhpunitTestCase
 
     public function testReadFromData()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__ . '/../../Fixtures/pixel-CMYK.jpg';
         $metadata = $this->getReader()->readData(file_get_contents($source));
         $this->assertInstanceOf(MetadataBag::class, $metadata);
     }
@@ -75,7 +75,7 @@ abstract class MetadataReaderTestCase extends PhpunitTestCase
 
     public function testReadFromStream()
     {
-        $source = __DIR__ . '/../../../Fixtures/pixel-CMYK.jpg';
+        $source = __DIR__ . '/../../Fixtures/pixel-CMYK.jpg';
         $resource = fopen($source, 'r');
         $metadata = $this->getReader()->readStream($resource);
         $this->assertInstanceOf(MetadataBag::class, $metadata);

@@ -36,9 +36,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerArrayAccess()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $thirdImage = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
         $layers = $firstImage->layers();
 
@@ -80,9 +80,9 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayerAddGetSetRemove()
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $thirdImage = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $thirdImage = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
         $layers = $firstImage->layers();
 
@@ -127,8 +127,8 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessInvalidArgumentExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
 
         $layers = $firstImage->layers();
 
@@ -145,8 +145,8 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testLayerArrayAccessOutOfBoundsExceptions($offset)
     {
-        $firstImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $secondImage = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $firstImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $secondImage = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
 
         $layers = $firstImage->layers();
 
@@ -163,11 +163,11 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
         $image = $this->getImage();
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,
@@ -181,13 +181,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnimateWithParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,
@@ -214,13 +214,13 @@ abstract class AbstractLayersTest extends \PHPUnit_Framework_TestCase
      */
     public function testAnimateWithWrongParameters($delay, $loops)
     {
-        $image = $this->getImage(__DIR__ . "/../../Fixtures/pink.gif");
+        $image = $this->getImage(__DIR__ . "/../Fixtures/pink.gif");
         $layers = $image->layers();
 
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/yellow.gif");
-        $layers[] = $this->getImage(__DIR__ . "/../../Fixtures/blue.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/yellow.gif");
+        $layers[] = $this->getImage(__DIR__ . "/../Fixtures/blue.gif");
 
-        $target = __DIR__ . '/../../Fixtures/temporary-gif.gif';
+        $target = __DIR__ . '/../Fixtures/temporary-gif.gif';
 
         $image->save($target, array(
             'animated' => true,
