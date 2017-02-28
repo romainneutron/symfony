@@ -1,3 +1,5 @@
 composer.lock
 phpunit.xml
 vendor/
+Tests/Fixtures/results/in_out
+!Tests/Fixtures/results/in_out/.placeholder
