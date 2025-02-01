@@ -97,12 +97,12 @@ final class TelegramTransport extends AbstractTransport
              *  - __underlined text__
              *  - various notations of images, f. ex. [title](url)
              *  - `code samples`.
-             * 
+             *
              * These formats should be taken care of when the message is constructed.
              *
              * @see https://core.telegram.org/bots/api#markdownv2-style
              */
-            $text = preg_replace('/([.!#>+-=|{}~])/', '\\\\$1', $text);
+            $text = preg_replace('/([.!#>+-=|{}~\(\)\[\]])/', '\\\\$1', $text);
         }
 
         if (isset($options['upload'])) {
